@@ -17,15 +17,17 @@ def ReadInput(file):
 
 def CalculateLocation(instructions):
     horizontal_position = 0
+    aim = 0
     depth = 0
 
     for direction, value in instructions:
         if direction == "forward":
             horizontal_position += value
+            depth += value * aim
         elif direction == "down":
-            depth += value
+            aim += value
         elif direction == "up":
-            depth -= value
+            aim -= value
     return (horizontal_position, depth)
 
 
