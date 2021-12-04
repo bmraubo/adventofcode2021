@@ -107,48 +107,38 @@ def power_rate_calculator(bit_columns, rate_type):
 # Life Support Functions
 
 
-def calculate_bit_criteria(first_row, bit_columns, rate_type):
-    def calculate_o2_rating(first_row, bit_columns):
-        o2_bit_criteria = []
-        for x in range(len(first_row)):
-            if find_more_common(bit_columns[x]) == 1:
-                o2_bit_criteria.append("1")
-            elif find_more_common(bit_columns[x]) == "0":
-                o2_bit_criteria.append("0")
-            else:
-                o2_bit_criteria.append("1")
-        return o2_bit_criteria
+def calculate_bit_criteria(bit, bit_columns, rate_type):
+    def calculate_o2_rating(bit, bit_columns):
+        if find_more_common(bit_columns[bit]) == 1:
+            return "1"
+        elif find_more_common(bit_columns[bit]) == "0":
+            return "0"
+        else:
+            return "1"
 
-    def calculate_co2_rating(first_row, bit_columns):
-        o2_bit_criteria = []
-        for x in range(len(first_row)):
-            if find_more_common(bit_columns[x]) == 1:
-                o2_bit_criteria.append("0")
-            elif find_more_common(bit_columns[x]) == "0":
-                o2_bit_criteria.append("1")
-            else:
-                o2_bit_criteria.append("0")
-        return o2_bit_criteria
-
-    bit_criteria = []
+    def calculate_co2_rating(bit, bit_columns):
+        if find_more_common(bit_columns[bit]) == 1:
+            return "0"
+        elif find_more_common(bit_columns[bit]) == "0":
+            return "1"
+        else:
+            return "0"
 
     if rate_type == "O2":
-        bit_criteria = calculate_o2_rating(first_row, bit_columns)
+        return calculate_o2_rating(bit, bit_columns)
     elif rate_type == "CO2":
-        bit_criteria = calculate_co2_rating(first_row, bit_columns)
-
-    return bit_criteria
+        return calculate_co2_rating(bit, bit_columns)
 
 
-def calculate_bit_life_support_rating(bit_rows, bit_criteria):
+def calculate_bit_life_support_rating(bit_rows, bit_columns, rate_type):
     working_list = bit_rows
-    for x in range(len(bit_criteria)):
-        for row in working_list:
-            if x == len(bit_criteria):
-                return row
-            elif row[x] != bit_criteria[x]:
-                del row
-    return working_list[0]
+    for x in range(len(bit_rows[0])):
+        while x != len(bit_rows[0]):
+            bit_criteria = calculate_bit_criteria(x, bit_columns, rate_type)
+            for row in working_list:
+                if row[x] != bit_criteria[x]:
+                    del row
+        return working_list[0]
 
 
 def calculate_life_support_rating(bit_rows, bit_criteria):
@@ -159,10 +149,11 @@ def calculate_life_support_rating(bit_rows, bit_criteria):
     life_support_rating = convert_binary_to_integer(life_support_rating_string)
     return life_support_rating
 
-def new_calculator():
-    for 
 
-
+# While the x != len(bit_row[0])
+# calculate bit criteria
+# remove rows that do not match
+# check if we have a winner
 
 if __name__ == "__main__":
     input_file = "input.txt"
