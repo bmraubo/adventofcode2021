@@ -27,16 +27,18 @@ def test_create_bit_list():
     assert solution.create_bit_columns(input_list) == expected_result
 
 
-def test_find_most_common():
+def test_rate_calculator():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
 
     bit_columns = solution.create_bit_columns(input_list)
 
-    expected_result = ["1", "0", "1", "1", "1", "0"]
+    expected_gamma_result = ["1", "0", "1", "1", "1", "0"]
+    expected_epsilon_result = ["0", "1", "0", "0", "0", "1"]
 
-    assert solution.find_most_common(bit_columns) == expected_result
+    assert solution.rate_calculator(bit_columns, "gamma") == expected_gamma_result
+    assert solution.rate_calculator(bit_columns, "epsilon") == expected_epsilon_result
 
 
 def test_convert_list_to_string():
