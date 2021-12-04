@@ -159,6 +159,10 @@ def calculate_life_support_rating(bit_rows, bit_criteria):
     life_support_rating = convert_binary_to_integer(life_support_rating_string)
     return life_support_rating
 
+def new_calculator():
+    for 
+
+
 
 if __name__ == "__main__":
     input_file = "input.txt"
