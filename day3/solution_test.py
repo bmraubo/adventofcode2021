@@ -29,6 +29,7 @@ def test_create_bit_columns():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
+    bit_rows = solution.create_bit_rows(input_list)
 
     expected_result = {
         0: ["0", "1", "1", "1", "1", "0", "0", "1", "1", "1", "0", "0"],
@@ -38,7 +39,7 @@ def test_create_bit_columns():
         4: ["0", "0", "0", "1", "1", "1", "1", "0", "0", "1", "0", "0"],
     }
 
-    assert solution.create_bit_columns(input_list) == expected_result
+    assert solution.create_bit_columns(bit_rows) == expected_result
 
 
 def test_create_bit_rows():
@@ -148,19 +149,24 @@ def test_calculate_bit_rating():
 
     input_list = solution.read_input_file(test_file)
     bit_rows = solution.create_bit_rows(input_list)
-    bit_columns = solution.create_bit_columns(input_list)
+    bit_columns = solution.create_bit_columns(bit_rows)
 
-    expected_02_rating = "10111"
+    expected_O2_rating = "10111"
+    expected_CO2_rating = "01010"
 
     assert (
         solution.calculate_bit_life_support_rating(bit_rows, bit_columns, "O2")
-        == expected_02_rating
+        == expected_O2_rating
+    )
+    assert (
+        solution.calculate_bit_life_support_rating(bit_rows, bit_columns, "CO2")
+        == expected_CO2_rating
     )
 
 
 def test_calculate_life_support_rating():
     test_file = "testinput.txt"
 
-    input_list = solution.read_input_file(test_file)
-    bit_rows = solution.create_bit_rows(input_list)
-    bit_columns = solution.create_bit_columns(input_list)
+    expected = 230
+
+    assert solution.calculate_life_support_rating(test_file)
