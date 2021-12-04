@@ -10,7 +10,7 @@ def test_read_input_file():
     assert solution.read_input_file(test_file) == expected_result
 
 
-def test_create_bit_list():
+def test_create_bit_columns():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
@@ -27,7 +27,29 @@ def test_create_bit_list():
     assert solution.create_bit_columns(input_list) == expected_result
 
 
-def test_rate_calculator():
+def test_create_bit_rows():
+    test_file = "testinput.txt"
+
+    input_list = solution.read_input_file(test_file)
+
+    expected_result = {
+        0: ["1", "0", "1", "1", "1", "0"],
+        1: ["0", "1", "0", "1", "0", "1"],
+        2: ["1", "0", "1", "0", "1", "0"],
+    }
+
+    assert solution.create_bit_rows(input_list) == expected_result
+
+
+def calculate_bit_criteria():
+    test_file = "testinput.txt"
+
+    input_list = solution.read_input_file(test_file)
+
+    bit_rows = solution.convert_string_to_list(input_list)
+
+
+def test_power_rate_calculator():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
@@ -37,14 +59,27 @@ def test_rate_calculator():
     expected_gamma_result = ["1", "0", "1", "1", "1", "0"]
     expected_epsilon_result = ["0", "1", "0", "0", "0", "1"]
 
-    assert solution.rate_calculator(bit_columns, "gamma") == expected_gamma_result
-    assert solution.rate_calculator(bit_columns, "epsilon") == expected_epsilon_result
+    assert solution.power_rate_calculator(bit_columns, "gamma") == expected_gamma_result
+    assert (
+        solution.power_rate_calculator(bit_columns, "epsilon")
+        == expected_epsilon_result
+    )
 
 
 def test_convert_list_to_string():
     test_input = ["1", "0", "1", "1", "1", "0"]
 
-    assert solution.convert_list_to_string(test_input) == "101110"
+    expected_result = "101110"
+
+    assert solution.convert_list_to_string(test_input) == expected_result
+
+
+def test_convert_string_to_list():
+    test_input = "101110"
+
+    expected_result = ["1", "0", "1", "1", "1", "0"]
+
+    assert solution.convert_string_to_list(test_input) == expected_result
 
 
 def test_convert_binary_to_integer():

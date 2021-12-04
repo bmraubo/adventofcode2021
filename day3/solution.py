@@ -22,7 +22,21 @@ def create_bit_columns(input_list):
     return bit_columns
 
 
-def rate_calculator(bit_columns, rate_type):
+def create_bit_rows(input_list):
+    def create_row(string):
+        row = []
+        for x in range(len(string)):
+            row.append(string[x])
+        return row
+
+    bit_rows = {}
+    for list_index in range(len(input_list)):
+        bit_rows[list_index] = create_row(input_list[list_index])
+
+    return bit_rows
+
+
+def power_rate_calculator(bit_columns, rate_type):
     def find_more_common(column):
         if column.count("1") > column.count("0"):
             return "1"
@@ -51,6 +65,13 @@ def convert_list_to_string(input_list):
     return "".join(input_list)
 
 
+def convert_string_to_list(string):
+    num_list = []
+    for x in string:
+        num_list.append(x)
+    return num_list
+
+
 def convert_binary_to_integer(binary_string):
     def modifier(x, binary_string):
         return int(binary_string[x]) * (2 ** int((len(binary_string) - 1) - x))
@@ -62,7 +83,7 @@ def convert_binary_to_integer(binary_string):
 
 
 def calculate_rate(bit_columns, rate_type):
-    rate_list = rate_calculator(bit_columns, rate_type)
+    rate_list = power_rate_calculator(bit_columns, rate_type)
     rate_string = convert_list_to_string(rate_list)
     rate = convert_binary_to_integer(rate_string)
     return rate
