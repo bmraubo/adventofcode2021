@@ -143,7 +143,7 @@ def test_calculate_life_support_rating():
     )
 
     assert solution.calculate_life_support_rating(bit_rows, o2_bit_criteria) == 46
-    assert solution.calculate_life_support_rating(bit_rows, co2_bit_criteria) == 46
+    assert solution.calculate_life_support_rating(bit_rows, co2_bit_criteria) == 0
 
 
 def test_calculate_power_consumption():
