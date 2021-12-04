@@ -61,25 +61,18 @@ def convert_binary_to_integer(binary_string):
     return sum(num_list)
 
 
-def calculate_gamma_rate(bit_columns):
-    gamma_rate_list = rate_calculator(bit_columns, "gamma")
-    gamma_rate_string = convert_list_to_string(gamma_rate_list)
-    gamma_rate = convert_binary_to_integer(gamma_rate_string)
-    return gamma_rate
-
-
-def calculate_epsilon_rate(bit_columns):
-    epsilon_rate_list = rate_calculator(bit_columns, "epsilon")
-    epsilon_rate_string = convert_list_to_string(epsilon_rate_list)
-    epsilon_rate = convert_binary_to_integer(epsilon_rate_string)
-    return epsilon_rate
+def calculate_rate(bit_columns, rate_type):
+    rate_list = rate_calculator(bit_columns, rate_type)
+    rate_string = convert_list_to_string(rate_list)
+    rate = convert_binary_to_integer(rate_string)
+    return rate
 
 
 def calculate_power_consumption(file):
     input = read_input_file(file)
     bit_columns = create_bit_columns(input)
-    gamma_rate = calculate_gamma_rate(bit_columns)
-    epsilon_rate = calculate_epsilon_rate(bit_columns)
+    gamma_rate = calculate_rate(bit_columns, "gamma")
+    epsilon_rate = calculate_rate(bit_columns, "epsilon")
     return gamma_rate * epsilon_rate
 
 

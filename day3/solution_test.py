@@ -60,8 +60,8 @@ def test_calculate_rates():
 
     bit_columns = solution.create_bit_columns(input_list)
 
-    assert solution.calculate_gamma_rate(bit_columns) == 46
-    assert solution.calculate_epsilon_rate(bit_columns) == 17
+    assert solution.calculate_rate(bit_columns, "gamma") == 46
+    assert solution.calculate_rate(bit_columns, "epsilon") == 17
 
 
 def test_calculate_power_consumption():
