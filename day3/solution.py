@@ -29,9 +29,9 @@ def create_bit_rows(input_list):
             row.append(string[x])
         return row
 
-    bit_rows = {}
+    bit_rows = []
     for list_index in range(len(input_list)):
-        bit_rows[list_index] = create_row(input_list[list_index])
+        bit_rows.append(create_row(input_list[list_index]))
 
     return bit_rows
 
@@ -67,6 +67,17 @@ def calculate_bit_criteria(first_row, bit_columns, rate_type):
         bit_criteria = calculate_co2_rating(first_row, bit_columns)
 
     return bit_criteria
+
+
+def calculate_bit_life_support_rating(bit_rows, bit_criteria):
+    working_list = bit_rows
+    for x in range(len(bit_criteria)):
+        for row in working_list:
+            if x == len(bit_criteria):
+                return row
+            elif row[x] != bit_criteria[x]:
+                del row
+    return working_list[0]
 
 
 def find_more_common(data):
@@ -116,7 +127,16 @@ def convert_binary_to_integer(binary_string):
     return sum(num_list)
 
 
-def calculate_rate(bit_columns, rate_type):
+def calculate_life_support_rating(bit_rows, bit_criteria):
+    bit_life_support_rating_list = calculate_bit_life_support_rating(
+        bit_rows, bit_criteria
+    )
+    life_support_rating_string = convert_list_to_string(bit_life_support_rating_list)
+    life_support_rating = convert_binary_to_integer(life_support_rating_string)
+    return life_support_rating
+
+
+def calculate_power_rate(bit_columns, rate_type):
     rate_list = power_rate_calculator(bit_columns, rate_type)
     rate_string = convert_list_to_string(rate_list)
     rate = convert_binary_to_integer(rate_string)
@@ -126,8 +146,8 @@ def calculate_rate(bit_columns, rate_type):
 def calculate_power_consumption(file):
     input = read_input_file(file)
     bit_columns = create_bit_columns(input)
-    gamma_rate = calculate_rate(bit_columns, "gamma")
-    epsilon_rate = calculate_rate(bit_columns, "epsilon")
+    gamma_rate = calculate_power_rate(bit_columns, "gamma")
+    epsilon_rate = calculate_power_rate(bit_columns, "epsilon")
     return gamma_rate * epsilon_rate
 
 

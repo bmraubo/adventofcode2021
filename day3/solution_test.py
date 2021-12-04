@@ -32,11 +32,11 @@ def test_create_bit_rows():
 
     input_list = solution.read_input_file(test_file)
 
-    expected_result = {
-        0: ["1", "0", "1", "1", "1", "0"],
-        1: ["0", "1", "0", "1", "0", "1"],
-        2: ["1", "0", "1", "0", "1", "0"],
-    }
+    expected_result = [
+        ["1", "0", "1", "1", "1", "0"],
+        ["0", "1", "0", "1", "0", "1"],
+        ["1", "0", "1", "0", "1", "0"],
+    ]
 
     assert solution.create_bit_rows(input_list) == expected_result
 
@@ -58,6 +58,24 @@ def test_calculate_bit_criteria():
     assert (
         solution.calculate_bit_criteria(bit_rows[0], bit_columns, "CO2")
         == expected_CO2_result
+    )
+
+
+def test_calculate_bit_rating():
+    test_file = "testinput.txt"
+
+    input_list = solution.read_input_file(test_file)
+    bit_rows = solution.create_bit_rows(input_list)
+    bit_columns = solution.create_bit_columns(input_list)
+
+    o2_bit_criteria = solution.calculate_bit_criteria(bit_rows[0], bit_columns, "O2")
+    co2_bit_criteria = solution.calculate_bit_criteria(bit_rows[0], bit_columns, "CO2")
+
+    expected_o2_result = ["1", "0", "1", "1", "1", "0"]
+
+    assert (
+        solution.calculate_bit_life_support_rating(bit_rows, o2_bit_criteria)
+        == expected_o2_result
     )
 
 
@@ -106,8 +124,26 @@ def test_calculate_rates():
 
     bit_columns = solution.create_bit_columns(input_list)
 
-    assert solution.calculate_rate(bit_columns, "gamma") == 46
-    assert solution.calculate_rate(bit_columns, "epsilon") == 17
+    assert solution.calculate_power_rate(bit_columns, "gamma") == 46
+    assert solution.calculate_power_rate(bit_columns, "epsilon") == 17
+
+
+def test_calculate_life_support_rating():
+    test_file = "testinput.txt"
+
+    input_list = solution.read_input_file(test_file)
+    bit_rows = solution.create_bit_rows(input_list)
+    bit_columns = solution.create_bit_columns(input_list)
+
+    o2_bit_criteria = solution.calculate_bit_criteria(bit_rows[0], bit_columns, "O2")
+    co2_bit_criteria = solution.calculate_bit_criteria(bit_rows[0], bit_columns, "CO2")
+
+    expected_o2_result = solution.calculate_life_support_rating(
+        bit_rows, o2_bit_criteria
+    )
+
+    assert solution.calculate_life_support_rating(bit_rows, o2_bit_criteria) == 46
+    assert solution.calculate_life_support_rating(bit_rows, co2_bit_criteria) == 46
 
 
 def test_calculate_power_consumption():
