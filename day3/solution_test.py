@@ -51,3 +51,20 @@ def test_convert_binary_to_integer():
     test_input = "101110"
 
     assert solution.convert_binary_to_integer(test_input) == 46
+
+
+def test_calculate_rates():
+    test_file = "testinput.txt"
+
+    input_list = solution.read_input_file(test_file)
+
+    bit_columns = solution.create_bit_columns(input_list)
+
+    assert solution.calculate_gamma_rate(bit_columns) == 46
+    assert solution.calculate_epsilon_rate(bit_columns) == 17
+
+
+def test_calculate_power_consumption():
+    test_file = "testinput.txt"
+
+    assert solution.calculate_power_consumption(test_file) == 782

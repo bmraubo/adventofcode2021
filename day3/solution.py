@@ -59,3 +59,30 @@ def convert_binary_to_integer(binary_string):
     for x in range(len(binary_string)):
         num_list.append(modifier(x, binary_string))
     return sum(num_list)
+
+
+def calculate_gamma_rate(bit_columns):
+    gamma_rate_list = rate_calculator(bit_columns, "gamma")
+    gamma_rate_string = convert_list_to_string(gamma_rate_list)
+    gamma_rate = convert_binary_to_integer(gamma_rate_string)
+    return gamma_rate
+
+
+def calculate_epsilon_rate(bit_columns):
+    epsilon_rate_list = rate_calculator(bit_columns, "epsilon")
+    epsilon_rate_string = convert_list_to_string(epsilon_rate_list)
+    epsilon_rate = convert_binary_to_integer(epsilon_rate_string)
+    return epsilon_rate
+
+
+def calculate_power_consumption(file):
+    input = read_input_file(file)
+    bit_columns = create_bit_columns(input)
+    gamma_rate = calculate_gamma_rate(bit_columns)
+    epsilon_rate = calculate_epsilon_rate(bit_columns)
+    return gamma_rate * epsilon_rate
+
+
+if __name__ == "__main__":
+    input_file = "input.txt"
+    print(calculate_power_consumption(input_file))
