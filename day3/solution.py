@@ -38,3 +38,13 @@ def find_most_common(bit_columns):
 
 def convert_list_to_string(input_list):
     return "".join(input_list)
+
+
+def convert_binary_to_integer(binary_string):
+    def modifier(x, binary_string):
+        return int(binary_string[x]) * (2 ** int((len(binary_string) - 1) - x))
+
+    num_list = []
+    for x in range(len(binary_string)):
+        num_list.append(modifier(x, binary_string))
+    return sum(num_list)

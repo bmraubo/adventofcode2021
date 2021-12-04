@@ -43,3 +43,9 @@ def test_convert_list_to_string():
     test_input = ["1", "0", "1", "1", "1", "0"]
 
     assert solution.convert_list_to_string(test_input) == "101110"
+
+
+def test_convert_binary_to_integer():
+    test_input = "101110"
+
+    assert solution.convert_binary_to_integer(test_input) == 46
