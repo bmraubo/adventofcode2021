@@ -36,13 +36,47 @@ def create_bit_rows(input_list):
     return bit_rows
 
 
-def power_rate_calculator(bit_columns, rate_type):
-    def find_more_common(column):
-        if column.count("1") > column.count("0"):
-            return "1"
-        elif column.count("0") > column.count("1"):
-            return "0"
+def calculate_bit_criteria(first_row, bit_columns, rate_type):
+    def calculate_o2_rating(first_row, bit_columns):
+        o2_bit_criteria = []
+        for x in range(len(first_row)):
+            if find_more_common(bit_columns[x]) == 1:
+                o2_bit_criteria.append("1")
+            elif find_more_common(bit_columns[x]) == "0":
+                o2_bit_criteria.append("0")
+            else:
+                o2_bit_criteria.append("1")
+        return o2_bit_criteria
 
+    def calculate_co2_rating(first_row, bit_columns):
+        o2_bit_criteria = []
+        for x in range(len(first_row)):
+            if find_more_common(bit_columns[x]) == 1:
+                o2_bit_criteria.append("0")
+            elif find_more_common(bit_columns[x]) == "0":
+                o2_bit_criteria.append("1")
+            else:
+                o2_bit_criteria.append("0")
+        return o2_bit_criteria
+
+    bit_criteria = []
+
+    if rate_type == "O2":
+        bit_criteria = calculate_o2_rating(first_row, bit_columns)
+    elif rate_type == "CO2":
+        bit_criteria = calculate_co2_rating(first_row, bit_columns)
+
+    return bit_criteria
+
+
+def find_more_common(data):
+    if data.count("1") > data.count("0"):
+        return "1"
+    elif data.count("0") > data.count("1"):
+        return "0"
+
+
+def power_rate_calculator(bit_columns, rate_type):
     def calculate_gamma_list(bit_columns):
         gamma_list = []
         for index, column in bit_columns.items():

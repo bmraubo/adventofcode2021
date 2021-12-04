@@ -41,19 +41,30 @@ def test_create_bit_rows():
     assert solution.create_bit_rows(input_list) == expected_result
 
 
-def calculate_bit_criteria():
+def test_calculate_bit_criteria():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
+    bit_rows = solution.create_bit_rows(input_list)
+    bit_columns = solution.create_bit_columns(input_list)
 
-    bit_rows = solution.convert_string_to_list(input_list)
+    expected_O2_result = ["1", "0", "1", "1", "1", "0"]
+    expected_CO2_result = ["0", "1", "0", "0", "0", "1"]
+
+    assert (
+        solution.calculate_bit_criteria(bit_rows[0], bit_columns, "O2")
+        == expected_O2_result
+    )
+    assert (
+        solution.calculate_bit_criteria(bit_rows[0], bit_columns, "CO2")
+        == expected_CO2_result
+    )
 
 
 def test_power_rate_calculator():
     test_file = "testinput.txt"
 
     input_list = solution.read_input_file(test_file)
-
     bit_columns = solution.create_bit_columns(input_list)
 
     expected_gamma_result = ["1", "0", "1", "1", "1", "0"]
