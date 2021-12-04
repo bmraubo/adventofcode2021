@@ -10,7 +10,7 @@ def read_input_file(input_file):
     return lines
 
 
-def create_bit_columns(input_list):
+def create_bit_columns(bit_rows):
     def create_column(x, input_list):
         column = []
         for input in input_list:
@@ -19,8 +19,8 @@ def create_bit_columns(input_list):
 
     bit_columns = {}
 
-    for x in range(len(input_list[0])):
-        bit_columns[x] = create_column(x, input_list)
+    for x in range(len(bit_rows[0])):
+        bit_columns[x] = create_column(x, bit_rows)
 
     return bit_columns
 
@@ -44,6 +44,8 @@ def find_more_common(data):
         return "1"
     elif data.count("0") > data.count("1"):
         return "0"
+    elif data.count("0") == data.count("1"):
+        return ""
 
 
 def convert_list_to_string(input_list):
@@ -109,15 +111,16 @@ def power_rate_calculator(bit_columns, rate_type):
 
 def calculate_bit_criteria(bit, bit_columns, rate_type):
     def calculate_o2_rating(bit, bit_columns):
-        if find_more_common(bit_columns[bit]) == 1:
+        if find_more_common(bit_columns[bit]) == "1":
             return "1"
         elif find_more_common(bit_columns[bit]) == "0":
             return "0"
-        else:
+        elif find_more_common(bit_columns[bit]) == "":
+            print("Equal")
             return "1"
 
     def calculate_co2_rating(bit, bit_columns):
-        if find_more_common(bit_columns[bit]) == 1:
+        if find_more_common(bit_columns[bit]) == "1":
             return "0"
         elif find_more_common(bit_columns[bit]) == "0":
             return "1"
@@ -131,14 +134,36 @@ def calculate_bit_criteria(bit, bit_columns, rate_type):
 
 
 def calculate_bit_life_support_rating(bit_rows, bit_columns, rate_type):
+    def print_remaining_rows(working_list):
+        print("remaining")
+        for row in working_list:
+            print(row)
+
+    def print_matching_rows(working_list):
+        print("matching")
+        for row in working_list:
+            print(row)
+
+    remaining_columns = bit_columns
+    matching_list = []
     working_list = bit_rows
     for x in range(len(bit_rows[0])):
-        while x != len(bit_rows[0]):
-            bit_criteria = calculate_bit_criteria(x, bit_columns, rate_type)
-            for row in working_list:
-                if row[x] != bit_criteria[x]:
-                    del row
-        return working_list[0]
+        bit_criteria = calculate_bit_criteria(x, remaining_columns, rate_type)
+        print(bit_criteria)
+        for row in working_list:
+            print(f"bit: {x} criteria: {bit_criteria} row: {row}")
+            print_remaining_rows(working_list)
+            if row[x] == bit_criteria:
+                print(f"added {row}")
+                print_matching_rows(matching_list)
+                matching_list.append(row)
+                if x == len(bit_rows[0]) - 1:
+                    return convert_list_to_string(matching_list[0])
+            else:
+                continue
+        working_list = matching_list
+        matching_list = []
+        remaining_columns = create_bit_columns(working_list)
 
 
 def calculate_life_support_rating(bit_rows, bit_criteria):
